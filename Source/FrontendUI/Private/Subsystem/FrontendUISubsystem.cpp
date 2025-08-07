@@ -38,7 +38,7 @@ void UFrontendUISubsystem::RegisterCreatedPrimaryLayoutWidget(UWidget_PrimaryLay
 	CreatedPrimaryLayout = InCreateWidget;
 }
 
-void UFrontendUISubsystem::PushSoftWidgetToStackAynsc(const FGameplayTag& InWidgetStackTag,
+void UFrontendUISubsystem::PushSoftWidgetToStackAsync(const FGameplayTag& InWidgetStackTag,
 	TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,
 	TFunction<void(EAsyncPushWidgetState, UWidget_ActivatableBase*)> AysncPushStateCallback)
 {
@@ -55,13 +55,13 @@ void UFrontendUISubsystem::PushSoftWidgetToStackAynsc(const FGameplayTag& InWidg
 				
 				check(LoadedWidgetClass && CreatedPrimaryLayout);
 
-				//在RegisteredWidgetStackMap中查找对应标签的控件
+				//在RegisteredWidgetStackMap中查找对应标签的控件栈
 				UCommonActivatableWidgetContainerBase* FoundWidgetStack = CreatedPrimaryLayout->FindWidgetStackByTag(InWidgetStackTag);
 
-				//生成（创建或从非活动池中提取）给定小部件类的实例并将其添加到容器中。
+				//生成（创建或从非活动池中提取）给定小部件类的实例并将其添加到容器中。【创建实例且添加到容器中时就是添加到视口了】
 				UWidget_ActivatableBase* CreatedWidget = FoundWidgetStack->AddWidget<UWidget_ActivatableBase>(
 					LoadedWidgetClass,
-					//匿名函数，lambda在实例生成之后，在实际添加到容器之前被调用。
+					//匿名函数，在实例生成之后，在实际添加到容器之前被调用。
 					[AysncPushStateCallback](UWidget_ActivatableBase& CreatedWidgetInstance)
 					{
 						//TFunction函数

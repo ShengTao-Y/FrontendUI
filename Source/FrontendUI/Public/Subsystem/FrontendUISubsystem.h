@@ -30,7 +30,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RegisterCreatedPrimaryLayoutWidget(UWidget_PrimaryLayout* InCreateWidget);
 
-	void PushSoftWidgetToStackAynsc(const FGameplayTag& InWidgetStackTag,TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,TFunction<void(EAsyncPushWidgetState,UWidget_ActivatableBase*)> AysncPushStateCallback);
+	void PushSoftWidgetToStackAsync(const FGameplayTag& InWidgetStackTag,TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,TFunction<void(EAsyncPushWidgetState,UWidget_ActivatableBase*)> AysncPushStateCallback);
 
 private:
 
