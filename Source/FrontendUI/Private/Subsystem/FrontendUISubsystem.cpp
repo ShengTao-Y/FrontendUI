@@ -3,6 +3,12 @@
 
 #include "Subsystem/FrontendUISubsystem.h"
 
+#include "Engine/AssetManager.h"
+#include "Engine/StreamableManager.h"
+#include "Widgets/Widget_ActivatableBase.h"
+#include "Widgets/Widget_PrimaryLayout.h"
+#include "Widgets/CommonActivatableWidgetContainer.h"
+
 UFrontendUISubsystem* UFrontendUISubsystem::Get(const UObject* WorldContextObject)
 {
 	if(GEngine)
@@ -30,4 +36,41 @@ void UFrontendUISubsystem::RegisterCreatedPrimaryLayoutWidget(UWidget_PrimaryLay
 	check(InCreateWidget);
 	
 	CreatedPrimaryLayout = InCreateWidget;
+}
+
+void UFrontendUISubsystem::PushSoftWidgetToStackAynsc(const FGameplayTag& InWidgetStackTag,
+	TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,
+	TFunction<void(EAsyncPushWidgetState, UWidget_ActivatableBase*)> AysncPushStateCallback)
+{
+	check(!InSoftWidgetClass.IsNull());
+
+	/*单个文件异步加载*/
+	UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
+		InSoftWidgetClass.ToSoftObjectPath(),
+		FStreamableDelegate::CreateLambda(
+			//匿名函数。要在匿名函数中使用不在其父函数体之内的变量，只能通过this传递。
+			[InSoftWidgetClass,this,InWidgetStackTag,AysncPushStateCallback]()
+			{
+				UClass* LoadedWidgetClass = InSoftWidgetClass.Get();
+				
+				check(LoadedWidgetClass && CreatedPrimaryLayout);
+
+				//在RegisteredWidgetStackMap中查找对应标签的控件
+				UCommonActivatableWidgetContainerBase* FoundWidgetStack = CreatedPrimaryLayout->FindWidgetStackByTag(InWidgetStackTag);
+
+				//生成（创建或从非活动池中提取）给定小部件类的实例并将其添加到容器中。
+				UWidget_ActivatableBase* CreatedWidget = FoundWidgetStack->AddWidget<UWidget_ActivatableBase>(
+					LoadedWidgetClass,
+					//匿名函数，lambda在实例生成之后，在实际添加到容器之前被调用。
+					[AysncPushStateCallback](UWidget_ActivatableBase& CreatedWidgetInstance)
+					{
+						//TFunction函数
+						AysncPushStateCallback(EAsyncPushWidgetState::OnCreatedBeforePush,&CreatedWidgetInstance);
+					}
+				);
+
+				AysncPushStateCallback(EAsyncPushWidgetState::AfterPush,CreatedWidget);
+			}
+		)
+	);
 }

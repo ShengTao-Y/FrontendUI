@@ -30,6 +30,6 @@ protected:
 private:
 	//Transient 不序列化该属性，该属性初始化时候会被0填充
 	UPROPERTY(Transient)
-	TMap<FGameplayTag,UCommonActivatableWidgetContainerBase*> RegisteredWidgetStackMap;
+	TMap<FGameplayTag,UCommonActivatableWidgetContainerBase*> RegisteredWidgetStackMap;//这个Map中存储的都是CommonActivatableWidgetStack
 	
 };
