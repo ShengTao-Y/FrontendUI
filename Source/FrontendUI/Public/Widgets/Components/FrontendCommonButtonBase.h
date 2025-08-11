@@ -17,7 +17,13 @@ public:
 	void SetButtonText(FText InText);
 
 private:
+	//--- Begin UUSerWidget Interface ---//
 	virtual void NativePreConstruct() override;
+	//--- End UUSerWidget Interface ---//
+
+	//--- Begin UCommonButtonBase Interface ---//
+	virtual void NativeOnCurrentTextStyleChanged() override;
+	//--- End UCommonButtonBase Interface ---//
 
 	//**** Bound Widgets ****//
 	UPROPERTY(meta = (BindWidgetOptional))
