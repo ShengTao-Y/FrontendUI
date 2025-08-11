@@ -13,9 +13,15 @@ namespace FrontendGameplayTags
 	* 
 	* 4、UE_DEFINE_GAMEPLAY_TAG_STATIC ：在 cpp 文件中用于定义仅对定义文件可用的标签。不同于其他 DEFINE 宏，这不应该与 DECLARE 宏调用配对。
 	 */
+
+	//前端控件栈
 	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_Modal);
 	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_GameMenu);
 	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_GameHud);
 	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_WidgetStack_Frontend);
+
+	//前端控件
+	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widget_PressAnyKeyScreen);
+	FRONTENDUI_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widget_MainMenuScreen);
 }
 
