@@ -19,7 +19,7 @@ class FRONTENDUI_API UFrontendDeveloperSettings : public UDeveloperSettings
 public:
 
 	//FrorceInlineRow表示将键值强制放到同一行
-	UPROPERTY(Config,EditAnywhere,Category = "Widget Reference",meta = (FrorceInlineRow,Categories = "Frontend.Widget"))
+	UPROPERTY(Config,EditAnywhere,Category = "Widget Reference",meta = (ForceInlineRow,Categories = "Frontend.Widget"))
 	TMap< FGameplayTag,TSoftClassPtr<UWidget_ActivatableBase> > FrontendWidgetMap;
 	
 };
