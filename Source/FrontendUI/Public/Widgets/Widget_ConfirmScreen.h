@@ -47,13 +47,14 @@ public:
 
 class UCommonTextBlock;
 class UDynamicEntryBox;
-/**
- * 
- */
+
 UCLASS(Abstract,BlueprintType,meta = (DisableNaiveTick))
 class FRONTENDUI_API UWidget_ConfirmScreen : public UWidget_ActivatableBase
 {
 	GENERATED_BODY()
+
+public:
+	void InitConfirmScreen(UConfirmScreenInfoObject* InScreenInfoObject,TFunction<void(EConfirmScreenButtonType)> ClickedButtonCallback);
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -67,3 +68,4 @@ private:
 	UDynamicEntryBox* DynamicEntryBox_Buttons;
 	
 };
+
