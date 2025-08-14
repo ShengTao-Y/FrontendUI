@@ -25,9 +25,15 @@ public:
 	LIST_DATA_ACCESSOR(TSoftObjectPtr<UTexture2D>,SoftDescriptionImage)
 	LIST_DATA_ACCESSOR(UListDataObject_Base*,ParentData)
 
-	//父类中是空的，子类重写这个函数
-	virtual TArray<UListDataObject_Base*> GetChildSettingData() const { return TArray<UListDataObject_Base*>();}
+	void InitDataObject();
 
+	//父类中是空的，子类重写这个函数
+	virtual TArray<UListDataObject_Base*> GetAllChildListData() const { return TArray<UListDataObject_Base*>();}
+	virtual bool HasAnyChildListData() const { return false;}
+
+protected:
+	//基类中是空的，子类需要重写，以便处理初始化
+	virtual void OnDataObjectInitialized();
 private:
 	FName DataID;
 	FText DataDisplayName;
