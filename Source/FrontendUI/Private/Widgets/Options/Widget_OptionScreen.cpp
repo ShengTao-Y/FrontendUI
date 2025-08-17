@@ -29,6 +29,8 @@ void UWidget_OptionScreen::NativeOnInitialized()
 			FSimpleDelegate::CreateUObject(this,&ThisClass::OnBackBoundActionTriggered)
 		)
 	);
+
+	TabListWidget_OptionsTabs->OnTabSelected.AddUniqueDynamic(this,&ThisClass::OnOptionsTabSelected);
 }
 
 
@@ -67,6 +69,8 @@ UOptionsDataRegistry* UWidget_OptionScreen::GetOrCreateDataRegistry()
 	return CreatedOwningDataRegistry;
 }
 
+
+
 void UWidget_OptionScreen::OnResetBoundActionTriggered()
 {
 	Debug::Print(TEXT("Reset bound action triggered"));
@@ -74,4 +78,9 @@ void UWidget_OptionScreen::OnResetBoundActionTriggered()
 void UWidget_OptionScreen::OnBackBoundActionTriggered()
 {
 	DeactivateWidget();
+}
+
+void UWidget_OptionScreen::OnOptionsTabSelected(FName TabId)
+{
+	Debug::Print(TEXT("Select Tab is ")+TabId.ToString());
 }

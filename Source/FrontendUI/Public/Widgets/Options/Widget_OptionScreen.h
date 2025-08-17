@@ -26,6 +26,9 @@ protected:
 private:
 	
 	UOptionsDataRegistry* GetOrCreateDataRegistry();
+
+	UFUNCTION()
+	void OnOptionsTabSelected(FName TabId);
 	
 	void OnResetBoundActionTriggered();
 	void OnBackBoundActionTriggered();
