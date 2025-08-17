@@ -6,6 +6,11 @@
 #include "Editor/WidgetCompilerLog.h"
 #include "Widgets/Components/FrontendCommonButtonBase.h"
 
+void UFrontendCommonTabListWidgetBase::RequestRegisterTab(const FName& InTabID, const FText& InTabDisplayName)
+{
+}
+
+#if WITH_EDITOR
 void UFrontendCommonTabListWidgetBase::ValidateCompiledDefaults(IWidgetCompilerLog& CompileLog) const
 {
 	Super::ValidateCompiledDefaults(CompileLog);
@@ -19,3 +24,4 @@ void UFrontendCommonTabListWidgetBase::ValidateCompiledDefaults(IWidgetCompilerL
 		));
 	}
 }
+#endif

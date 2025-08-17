@@ -20,6 +20,7 @@ public:
 	//在UOptionsdatareregistry类型的对象创建之后，由options screen调用
 	void InitOptionsDataRegistry(ULocalPlayer* InOwningLocalPlayer);
 
+	//获取Tab页集合
 	const TArray<UListDataObject_Collection*>& GetRegisteredOptionsTabCollections() const { return RegisteredOptionsTabCollections;}
 private:
 	void InitGameplayCollectionTab();
